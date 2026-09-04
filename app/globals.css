@@ -24,15 +24,17 @@
 
 }
 
-html { background: var(--bg) !important; color: var(--ink) !important; color-scheme: light only; }
-body { background: var(--bg); color: var(--ink); }
+html { background: var(--bg) !important; color: var(--ink) !important; color-scheme: light only; overflow-x: hidden; }
+body { background: transparent; color: var(--ink); }
 body {
   font-family: "Satoshi", "Inter", system-ui, -apple-system, sans-serif;
   font-size: 17px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  max-width: 100vw;
 }
+main, header, footer { overflow-x: clip; }
 
 h1, h2, h3 { font-family: "VC Henrietta", "Satoshi", system-ui, sans-serif; line-height: 0.98; letter-spacing: 0.01em; font-weight: 300; }
 h1 { font-size: clamp(2.4rem, 8vw, 4.4rem); }
@@ -102,10 +104,11 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
 /* parallax background: thin white grid, scrolls slower than the page */
-.parallax { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.parallax-layer { position: absolute; inset: 0; height: 300vh; will-change: transform; }
+.parallax { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+header, main, footer { position: relative; z-index: 1; }
+.parallax-layer { position: absolute; left: 0; right: 0; top: 0; height: calc(100vh + 96px); will-change: transform; }
 .parallax-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
-.parallax-grid line { stroke: #fff; stroke-width: 1.2; }
+.parallax-grid path { fill: none; stroke: #fff; stroke-width: 1.6; }
 
 /* white scribble drawings */
 .scribble { position: absolute; pointer-events: none; user-select: none; mix-blend-mode: difference; z-index: 2; }

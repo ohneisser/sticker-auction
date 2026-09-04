@@ -24,7 +24,7 @@ export default async function Home() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {!isDemo && <LiveRefresh />}
+      {!isDemo && <LiveRefresh every={10000} />}
 
       <section className="pt-8 md:pt-16 md:grid md:grid-cols-12 md:gap-10 md:items-center">
         <div className="md:col-span-7">
