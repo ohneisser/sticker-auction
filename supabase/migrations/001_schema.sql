@@ -179,5 +179,6 @@ insert into public.slots (key, label, format, width_cm, height_cm, x_mm, y_mm, m
   ('wide-3','Wide 3','16:9',6,3.4,8,169,30000,now() + interval '7 days',13,'auction','open'),
   ('wide-4','Wide 4','16:9',6,3.4,8,207,30000,now() + interval '7 days',14,'auction','open'),
   ('wide-5','Wide 5','16:9',6,3.4,224,160,30000,now() + interval '7 days',15,'auction','open'),
-  ('wide-6','Wide 6','16:9',6,3.4,224,198,30000,now() + interval '7 days',16,'auction','open')
+  ('wide-6','Wide 6','16:9',6,3.4,224,198,30000,now() + interval '7 days',16,'auction','open'),
+  ('wide-7','Wide 7','16:9',6,3.4,288,150,30000,now() + interval '7 days',17,'auction','open')
 on conflict (key) do nothing;

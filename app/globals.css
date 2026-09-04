@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@font-face { font-family: "VC Henrietta"; src: url("/fonts/VCHenriettaCondensed-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "VC Henrietta"; src: url("/fonts/VCHenriettaCondensed-SemiBold.otf") format("opentype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "VC Henrietta"; src: url("/fonts/VCHenriettaCondensed-Bold.otf") format("opentype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "VC Henrietta"; src: url("/fonts/VCHenriettaCondensed-Black.otf") format("opentype"); font-weight: 900; font-display: swap; }
+
 @font-face {
   font-family: "Satoshi";
   src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
@@ -8,7 +13,7 @@
 }
 
 :root {
-  --bg: #F4F3EE;
+  --bg: #ECEAE3;
   --bg-2: #FFFFFF;
   --ink: #141414;
   --ink-soft: #6C6B66;
@@ -16,8 +21,7 @@
   --danger: #C8321E;
   --lid: #DCDAD2;
   --lid-logo: #C6C4BC;
-  --slot: #FFFFFF;
-  --slot-bid: #141414;
+
 }
 
 html { background: var(--bg) !important; color: var(--ink) !important; color-scheme: light only; }
@@ -30,9 +34,10 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3 { line-height: 0.95; letter-spacing: -0.025em; font-weight: 700; }
-h1 { font-size: clamp(2.6rem, 11vw, 6rem); }
-h2 { font-size: clamp(1.8rem, 6.5vw, 3rem); }
+h1, h2, h3 { font-family: "VC Henrietta", "Satoshi", system-ui, sans-serif; line-height: 0.98; letter-spacing: 0.01em; font-weight: 300; }
+h1 { font-size: clamp(2.4rem, 8vw, 4.4rem); }
+h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); }
+h3 { font-family: "Satoshi", system-ui, sans-serif; letter-spacing: -0.01em; font-weight: 700; }
 h3 { font-size: 1.2rem; line-height: 1.15; }
 p { max-width: 58ch; }
 
@@ -40,6 +45,7 @@ a { text-decoration: underline; text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
 
 .btn {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   background: var(--ink); color: var(--bg);
   padding: 1rem 1.4rem; font-weight: 700; font-size: 1.05rem;
@@ -53,7 +59,7 @@ a:hover { text-decoration-thickness: 2px; }
 .field { display: block; margin-bottom: 1rem; }
 .field span { display: block; font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0.35rem; }
 .field input, .field select, .field textarea {
-  width: 100%; background: var(--bg-2); border: 1px solid var(--line);
+  width: 100%; background: var(--bg-2); border: 1.5px solid var(--line); border-radius: 12px 4px 10px 4px / 4px 10px 4px 12px;
   padding: 0.85rem 0.9rem; font: inherit; font-size: 16px; color: var(--ink); min-height: 50px;
 }
 .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: var(--ink); }
@@ -62,12 +68,16 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 .rule { border-top: 1px solid var(--line); }
 .error { background: rgba(200, 50, 30, 0.08); border: 1px solid var(--danger); color: var(--danger); padding: 0.7rem 0.9rem; font-size: 0.95rem; }
 .note { color: var(--ink-soft); font-size: 0.95rem; }
-.box { background: var(--bg-2); border: 1px solid var(--line); padding: 1.1rem; }
+.box { background: var(--bg-2); border: 1.5px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding: 1.3rem 1.4rem; position: relative; }
 
-.choice { display: flex; gap: .8rem; align-items: flex-start; background: var(--bg-2); border: 1px solid var(--line); padding: 1rem; cursor: pointer; }
+.choice { display: flex; gap: .8rem; align-items: flex-start; background: var(--bg-2); border: 1.5px solid var(--line); border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px; padding: 1rem 1.2rem; cursor: pointer; }
 .choice.on { border-color: var(--ink); outline: 1px solid var(--ink); }
 
-.hero-img { background: var(--lid); aspect-ratio: 4 / 3; width: 100%; object-fit: cover; }
+.hero-img { display: block; width: 100%; height: auto; transform: rotate(-4deg); filter: drop-shadow(2px 2.5px 0 rgba(0,0,0,0.4)); }
+.hero-wrap { position: relative; overflow: hidden; }
+.lid-photo { filter: drop-shadow(0.8px 1px 0 rgba(0,0,0,0.4)); }
+.socials a { text-decoration: none; font-weight: 500; }
+.socials a:hover { text-decoration: underline; }
 
 .sticky-cta {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
@@ -76,15 +86,27 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 }
 @media (min-width: 768px) { .sticky-cta { display: none; } }
 
-/* laptop map */
-.slot-rect { fill: var(--slot); stroke: var(--line); stroke-width: .4; cursor: pointer; }
-.slot-rect.has-bid { fill: var(--slot-bid); stroke: none; }
-.slot-rect.closed { fill: var(--ink); stroke: none; cursor: default; }
-.slot-rect.prize { fill: var(--ink); stroke: var(--bg); stroke-width: 1.2; cursor: pointer; }
-.slot-link:hover .slot-rect, .slot-link:focus .slot-rect { fill: var(--ink-soft); }
-.slot-link:hover .slot-label, .slot-link:focus .slot-label { fill: #fff; }
+/* laptop map: frames invisible, only the price shows; hover reveals a black scribble frame */
+.slot-rect { fill: transparent; stroke: var(--ink); stroke-opacity: 0; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; cursor: pointer; transition: stroke-opacity 120ms; }
+.slot-rect.closed { cursor: default; stroke-dasharray: 2 2; }
+.slot-link:hover .slot-rect, .slot-link:focus .slot-rect { stroke-opacity: 1; }
 .slot-label { font-size: 6px; font-weight: 700; fill: var(--ink); pointer-events: none; }
-.slot-label.light { fill: #fff; }
 .slot-label.xs { font-size: 4.6px; }
+.slot-label.corner { font-size: 4px; font-weight: 600; }
+@media (max-width: 767px) {
+  .slot-label { font-size: 9px; }
+  .slot-label.xs { font-size: 7px; }
+  .slot-label.corner { font-size: 5.5px; }
+}
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* parallax background: thin white grid, scrolls slower than the page */
+.parallax { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.parallax-layer { position: absolute; inset: 0; height: 300vh; will-change: transform; }
+.parallax-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+.parallax-grid line { stroke: #fff; stroke-width: 1.2; }
+
+/* white scribble drawings */
+.scribble { position: absolute; pointer-events: none; user-select: none; mix-blend-mode: difference; z-index: 2; }
+.scribble img { width: 100%; height: auto; display: block; }

@@ -21,5 +21,6 @@ export const demoSlots: SlotPublic[] = [
   { key: "wide-3", label: "Wide 3", format: "16:9", width_cm: 6, height_cm: 3.4, x_mm: 8, y_mm: 169, min_bid_cents: 30000, current_bid_cents: null, ends_at: end(), status: "open", kind: "auction", sort_order: 13, bid_count: 0 },
   { key: "wide-4", label: "Wide 4", format: "16:9", width_cm: 6, height_cm: 3.4, x_mm: 8, y_mm: 207, min_bid_cents: 30000, current_bid_cents: null, ends_at: end(), status: "open", kind: "auction", sort_order: 14, bid_count: 0 },
   { key: "wide-5", label: "Wide 5", format: "16:9", width_cm: 6, height_cm: 3.4, x_mm: 224, y_mm: 160, min_bid_cents: 30000, current_bid_cents: null, ends_at: end(), status: "open", kind: "auction", sort_order: 15, bid_count: 0 },
+  { key: "wide-7", label: "Wide 7", format: "16:9", width_cm: 6, height_cm: 3.4, x_mm: 288, y_mm: 150, min_bid_cents: 30000, current_bid_cents: null, ends_at: end(), status: "open", kind: "auction", sort_order: 17, bid_count: 0 },
   { key: "wide-6", label: "Wide 6", format: "16:9", width_cm: 6, height_cm: 3.4, x_mm: 224, y_mm: 198, min_bid_cents: 30000, current_bid_cents: null, ends_at: end(), status: "open", kind: "auction", sort_order: 16, bid_count: 0 },
 ];

@@ -43,7 +43,7 @@ export default async function PrimePage({ searchParams }: { searchParams: Promis
       <p className="mt-4 text-lg">The 8 × 8 cm square in the middle, right on the Apple logo. The best spot on the laptop. There is no bid button for it.</p>
 
       <ol className="mt-6 space-y-3">
-        <li className="flex gap-4"><span className="font-bold text-2xl leading-none note">1</span><div>Prime stays locked until all 16 spots are sold.</div></li>
+        <li className="flex gap-4"><span className="font-bold text-2xl leading-none note">1</span><div>Prime stays locked until all 17 spots are sold.</div></li>
         <li className="flex gap-4"><span className="font-bold text-2xl leading-none note">2</span><div>Then tickets open. {usd(TICKET_PRICE_CENTS)} each. Buy as many as you want, more tickets means more chances.</div></li>
         <li className="flex gap-4"><span className="font-bold text-2xl leading-none note">3</span><div>Won a spot? Every ticket you buy counts twice.</div></li>
         <li className="flex gap-4"><span className="font-bold text-2xl leading-none note">4</span><div>One ticket gets pulled. That company goes in the middle.</div></li>
@@ -55,7 +55,7 @@ export default async function PrimePage({ searchParams }: { searchParams: Promis
         {!unlocked ? (
           <div className="box">
             <p className="font-bold">Locked.</p>
-            <p className="note mt-1">Opens the moment the last of the 16 spots is paid. Win a spot now and your tickets count twice later.</p>
+            <p className="note mt-1">Opens the moment the last of the 17 spots is paid. Win a spot now and your tickets count twice later.</p>
             <Link href="/#spots" className="btn mt-4">Pick a spot</Link>
           </div>
         ) : !loggedIn ? (
