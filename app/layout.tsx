@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { getUserSafe } from "@/lib/supabase/server";
-import Parallax from "@/components/Parallax";
 
 export const metadata: Metadata = {
   title: "Put your logo on my laptop",
@@ -17,7 +16,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className="min-h-screen">
-        <Parallax />
         <header className="flex items-center justify-between px-5 md:px-10 py-4 text-sm">
           <Link href="/" className="no-underline font-bold">@ohneis652</Link>
           <nav className="flex gap-5">
