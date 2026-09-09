@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Put your logo on my laptop",
   description: "16 sticker spots on the laptop that gets seen by more AI people than most ads. 7 days to bid. Highest bid wins.",
 };
-export const viewport: Viewport = { themeColor: "#ECEAE3", width: "device-width", initialScale: 1, colorScheme: "light" };
+export const viewport: Viewport = { themeColor: "#E5DDD2", width: "device-width", initialScale: 1, colorScheme: "light" };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const user = await getUserSafe();

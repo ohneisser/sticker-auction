@@ -157,7 +157,7 @@ export default function BidForm(props: Props) {
   if (!clientSecret) return <p className="note">Loading payment form…</p>;
 
   return (
-    <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: "flat", variables: { colorPrimary: "#141414", colorBackground: "#ffffff", colorText: "#141414", borderRadius: "0px", fontFamily: "Satoshi, Inter, system-ui, sans-serif" } } }}>
+    <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: "flat", variables: { colorPrimary: "#0527FF", colorBackground: "#ffffff", colorText: "#141414", borderRadius: "0px", fontFamily: "Satoshi, Inter, system-ui, sans-serif" } } }}>
       <Inner {...props} />
     </Elements>
   );

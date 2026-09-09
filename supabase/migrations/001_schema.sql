@@ -142,6 +142,12 @@ begin
   if p_amount_cents < v_min then raise exception 'bid_too_low:%', v_min; end if;
   if v_slot.current_bidder = p_user_id then raise exception 'already_leading'; end if;
 
+  -- first bid ever starts the 7 day clock for every open spot
+  if not exists (select 1 from public.bids) then
+    update public.slots set ends_at = now() + interval '7 days' where status = 'open';
+    v_slot.ends_at := now() + interval '7 days';
+  end if;
+
   v_prev_bidder := v_slot.current_bidder;
   update public.bids set status = 'outbid' where slot_key = p_slot_key and status = 'leading';
 
@@ -163,22 +169,22 @@ revoke all on function public.place_bid(text, uuid, integer, text, text, integer
 -- Positions are mm from the top left of the lid. ends_at = 7 days from when you run this.
 -- Prime is the 8 x 8 cm square dead center, over the Apple logo. Never sold: unlocked once every other spot is paid, then raffled via tickets.
 insert into public.slots (key, label, format, width_cm, height_cm, x_mm, y_mm, min_bid_cents, ends_at, sort_order, kind, status) values
-  ('prime','Prime','1:1',8,8,138,84,0,now() + interval '7 days',0,'prize','prize'),
-  ('hero','Hero','4:3',12.4,9.3,8,8,150000,now() + interval '7 days',1,'auction','open'),
-  ('strip-1','Strip 1','3:1',12.4,4,224,8,60000,now() + interval '7 days',2,'auction','open'),
-  ('strip-2','Strip 2','3:1',12.4,4,224,52,60000,now() + interval '7 days',3,'auction','open'),
-  ('center-top','Center top','1:1',7.4,7.4,141,8,70000,now() + interval '7 days',4,'auction','open'),
-  ('center-bottom','Center bottom','4:3',8.4,6.3,136,177,70000,now() + interval '7 days',5,'auction','open'),
-  ('sq-1','Square 1','1:1',6,6,8,105,40000,now() + interval '7 days',6,'auction','open'),
-  ('sq-2','Square 2','1:1',6,6,72,181,40000,now() + interval '7 days',7,'auction','open'),
-  ('sq-3','Square 3','1:1',6,6,224,96,40000,now() + interval '7 days',8,'auction','open'),
-  ('box-1','Box 1','4:3',6,4.5,288,96,35000,now() + interval '7 days',9,'auction','open'),
-  ('box-2','Box 2','4:3',6,4.5,288,189,35000,now() + interval '7 days',10,'auction','open'),
-  ('wide-1','Wide 1','16:9',6,3.4,72,105,30000,now() + interval '7 days',11,'auction','open'),
-  ('wide-2','Wide 2','16:9',6,3.4,72,143,30000,now() + interval '7 days',12,'auction','open'),
-  ('wide-3','Wide 3','16:9',6,3.4,8,169,30000,now() + interval '7 days',13,'auction','open'),
-  ('wide-4','Wide 4','16:9',6,3.4,8,207,30000,now() + interval '7 days',14,'auction','open'),
-  ('wide-5','Wide 5','16:9',6,3.4,224,160,30000,now() + interval '7 days',15,'auction','open'),
-  ('wide-6','Wide 6','16:9',6,3.4,224,198,30000,now() + interval '7 days',16,'auction','open'),
-  ('wide-7','Wide 7','16:9',6,3.4,288,150,30000,now() + interval '7 days',17,'auction','open')
+  ('prime','Prime','1:1',8,8,138,84,0,'2027-12-31 00:00:00+00',0,'prize','prize'),
+  ('hero','Hero','4:3',12.4,9.3,8,8,98700,'2027-12-31 00:00:00+00',1,'auction','open'),
+  ('strip-1','Strip 1','3:1',12.4,4,224,8,41200,'2027-12-31 00:00:00+00',2,'auction','open'),
+  ('strip-2','Strip 2','3:1',12.4,4,224,52,41200,'2027-12-31 00:00:00+00',3,'auction','open'),
+  ('center-top','Center top','1:1',7.4,7.4,141,8,48700,'2027-12-31 00:00:00+00',4,'auction','open'),
+  ('center-bottom','Center bottom','4:3',8.4,6.3,136,177,48700,'2027-12-31 00:00:00+00',5,'auction','open'),
+  ('sq-1','Square 1','1:1',6,6,8,105,27700,'2027-12-31 00:00:00+00',6,'auction','open'),
+  ('sq-2','Square 2','1:1',6,6,72,181,27700,'2027-12-31 00:00:00+00',7,'auction','open'),
+  ('sq-3','Square 3','1:1',6,6,224,96,27700,'2027-12-31 00:00:00+00',8,'auction','open'),
+  ('box-1','Box 1','4:3',6,4.5,288,96,24300,'2027-12-31 00:00:00+00',9,'auction','open'),
+  ('box-2','Box 2','4:3',6,4.5,288,189,24300,'2027-12-31 00:00:00+00',10,'auction','open'),
+  ('wide-1','Wide 1','16:9',6,3.4,72,105,20900,'2027-12-31 00:00:00+00',11,'auction','open'),
+  ('wide-2','Wide 2','16:9',6,3.4,72,143,20900,'2027-12-31 00:00:00+00',12,'auction','open'),
+  ('wide-3','Wide 3','16:9',6,3.4,8,169,20900,'2027-12-31 00:00:00+00',13,'auction','open'),
+  ('wide-4','Wide 4','16:9',6,3.4,8,207,20900,'2027-12-31 00:00:00+00',14,'auction','open'),
+  ('wide-5','Wide 5','16:9',6,3.4,224,160,20900,'2027-12-31 00:00:00+00',15,'auction','open'),
+  ('wide-6','Wide 6','16:9',6,3.4,224,198,20900,'2027-12-31 00:00:00+00',16,'auction','open'),
+  ('wide-7','Wide 7','16:9',6,3.4,288,150,20900,'2027-12-31 00:00:00+00',17,'auction','open')
 on conflict (key) do nothing;

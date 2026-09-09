@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import BidForm from "@/components/BidForm";
 import Countdown from "@/components/Countdown";
 import LiveRefresh from "@/components/LiveRefresh";
-import { usd, nextMinBid, type SlotPublic } from "@/lib/format";
+import { usd, nextMinBid, notStarted, type SlotPublic } from "@/lib/format";
 import { isDemo, demoSlots } from "@/lib/demo";
 
 export const dynamic = "force-dynamic";
@@ -47,8 +47,8 @@ export default async function SlotPage({ params }: { params: Promise<{ key: stri
         </div>
         <div className="box">
           <div className="note">Ends in</div>
-          <div className="text-2xl font-bold"><Countdown endsAt={s.ends_at} /></div>
-          <div className="note">+10 min on late bids</div>
+          <div className="text-2xl font-bold">{notStarted(s.ends_at) ? "7 days" : <Countdown endsAt={s.ends_at} />}</div>
+          <div className="note">{notStarted(s.ends_at) ? "clock starts with the first bid" : "+10 min on late bids"}</div>
         </div>
       </div>
 

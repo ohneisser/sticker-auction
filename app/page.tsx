@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import LaptopMap from "@/components/LaptopMap";
 import Countdown from "@/components/Countdown";
 import LiveRefresh from "@/components/LiveRefresh";
-import { usd, nextMinBid, DESIGN_FEE_CENTS, TICKET_PRICE_CENTS, type SlotPublic } from "@/lib/format";
+import { usd, nextMinBid, notStarted, DESIGN_FEE_CENTS, TICKET_PRICE_CENTS, type SlotPublic } from "@/lib/format";
 import { isDemo, demoSlots } from "@/lib/demo";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +21,7 @@ export default async function Home() {
   const sellable = slots.filter((s) => s.kind !== "prize");
   const open = sellable.filter((s) => s.status === "open");
   const totalBids = slots.reduce((n, s) => n + Number(s.bid_count || 0), 0);
+  const waiting = notStarted(latestEnd);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -28,7 +29,7 @@ export default async function Home() {
 
       <section className="pt-8 md:pt-16 md:grid md:grid-cols-12 md:gap-10 md:items-center">
         <div className="md:col-span-7">
-        <p className="font-bold mb-4">{open.length} of {sellable.length} spots open · ends in <Countdown endsAt={latestEnd} /></p>
+        <p className="mb-4"><span className="eyebrow">{open.length} of {sellable.length} spots open · {waiting ? "7 day clock starts with the first bid" : <>ends in <Countdown endsAt={latestEnd} /></>}</span></p>
         <h1>My laptop gets seen by more AI founders than most ads do.</h1>
         <p className="mt-5 text-lg md:text-xl">
           I'm Andries. I make AI videos and pictures for brands like Adobe, Magnific, Artlist, Envato, Higgsfield and InVideo. I travel all year. My laptop is open on stages, at meetups and in cafés, in front of the people who build and buy AI tools: founders, creative directors, the ones who pick the stack.
@@ -61,9 +62,9 @@ export default async function Home() {
 
       <section id="spots" className="mt-20 md:mt-24 scroll-mt-20">
         <h2>Pick your spot.</h2>
-        <p className="note mt-2 mb-5">Real sizes on a 16 inch MacBook. Tap a price to bid on that spot.</p>
+        <p className="note mt-2 mb-5">Real sizes on a 16 inch MacBook. Tap a price to bid. Blue outline means someone already bid.</p>
         <LaptopMap slots={slots} />
-        <p className="note mt-4 md:max-w-xl">Each new bid is at least $25 or 10% more. A bid in the last 10 minutes adds 10 more minutes. Nobody sees who is bidding.</p>
+        <p className="note mt-4 md:max-w-xl">The first bid starts a 7 day clock for all spots. Each new bid is at least $25 or 10% more. A bid in the last 10 minutes adds 10 more minutes. Nobody sees who is bidding.</p>
       </section>
 
       <section className="mt-14 md:mt-20 box">
@@ -100,7 +101,7 @@ export default async function Home() {
 
       {open.length > 0 && (
         <div className="sticky-cta">
-          <a href="#spots" className="btn w-full">Pick a spot · <Countdown endsAt={latestEnd} /></a>
+          <a href="#spots" className="btn w-full">Pick a spot{waiting ? "" : <> · <Countdown endsAt={latestEnd} /></>}</a>
         </div>
       )}
     </div>

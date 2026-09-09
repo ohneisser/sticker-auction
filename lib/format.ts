@@ -27,3 +27,8 @@ export type SlotPublic = {
   sort_order: number;
   bid_count: number;
 };
+
+// ends_at more than 300 days out means the auction hasn't started yet (it starts with the first bid)
+export function notStarted(endsAt: string) {
+  return new Date(endsAt).getTime() - Date.now() > 300 * 86400000;
+}
