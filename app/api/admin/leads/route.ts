@@ -11,7 +11,7 @@ export async function GET() {
   }
   const admin = createAdminClient();
   const { data: profiles } = await admin.from("profiles").select("*").order("created_at", { ascending: false });
-  const { data: bids } = await admin.from("bids").select("user_id, slot_key, amount_cents, status");
+  const { data: bids } = await admin.from("orders").select("user_id, slot_key, amount_cents, status");
 
   const byUser = new Map<string, string[]>();
   for (const b of bids || []) {
@@ -22,7 +22,7 @@ export async function GET() {
 
   const esc = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
   const rows = [
-    ["email", "name", "company", "website", "role", "marketing_opt_in", "signed_up", "bids"].join(","),
+    ["email", "name", "company", "website", "role", "marketing_opt_in", "signed_up", "orders"].join(","),
     ...(profiles || []).map((p) =>
       [p.email, p.full_name, p.company, p.website, p.role, p.marketing_opt_in, p.created_at, (byUser.get(p.id) || []).join(" | ")]
         .map(esc)

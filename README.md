@@ -12,7 +12,7 @@ Next.js + Supabase + Stripe. Companies bid on sticker spots on the MacBook lid, 
 
 2. **Stripe**
    - Developers → API keys: copy publishable + secret key into `.env`. Use **test keys** first, place a few bids with card `4242 4242 4242 4242`, then switch to live.
-   - Developers → Webhooks → Add endpoint: `https://yourdomain/api/stripe/webhook`, events `payment_intent.succeeded`, `payment_intent.payment_failed` and `checkout.session.completed` (Prime tickets). Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
+   - Developers → Webhooks → Add endpoint: `https://yourdomain/api/stripe/webhook`, events `checkout.session.completed` and `checkout.session.expired`. Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 
 3. **Emails (optional)**: create a Resend account, verify your domain, put the key in `RESEND_API_KEY`. Without it the app runs fine, just no outbid / winner emails.
 
@@ -30,7 +30,14 @@ Next.js + Supabase + Stripe. Companies bid on sticker spots on the MacBook lid, 
 - Bid steps: max($25, 10 %). Change in `place_bid()` and `lib/format.ts` (both places).
 - Anti sniping window: 10 minutes, in `place_bid()`.
 
-## Prime raffle
+## Fixed prices (current flow)
+
+- Every spot has a fixed price in `slots.min_bid_cents`. Buying = logo upload, then Stripe Checkout. The spot is reserved for 15 minutes (`reserve_slot()`), the webhook marks it sold on `checkout.session.completed` and frees it on `checkout.session.expired`.
+- Cron `/api/cron/release` frees stale reservations every 5 minutes and keeps Supabase awake.
+- Prime is a normal spot with a high price (key `prime`).
+- Run `supabase/migrations/002_fixed_prices.sql` after `001`.
+
+## Prime raffle (old, replaced)
 
 - The Prime slot (`kind = 'prize'`) is never auctioned. `/prime` shows locked until every other slot is `paid`.
 - Tickets are sold via Stripe Checkout, recorded by the webhook in `prime_tickets`. Price in `lib/format.ts` (`TICKET_PRICE_CENTS`).

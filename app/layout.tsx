@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <nav className="flex gap-5">
             {user ? (
               <>
-                <Link href="/account">My bids</Link>
+                <Link href="/account">My spots</Link>
                 {isAdmin && <Link href="/admin">Admin</Link>}
                 <form action="/logout" method="post"><button className="underline underline-offset-4 cursor-pointer">Log out</button></form>
               </>
@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </header>
         <main className="px-5 md:px-10 pb-32 md:pb-24">{children}</main>
         <footer className="px-5 md:px-10 py-8 rule text-sm note">
-          <p>Highest bid when the clock hits zero wins. You only pay if you win. Nobody sees who is bidding. Ohneisser LLC, Sheridan WY. <a href="mailto:ohneis@ohneis652.com">ohneis@ohneis652.com</a></p>
+          <p>Fixed prices, first come first served. Payment via Stripe. Nobody sees who bought what until the reveal. Ohneisser LLC, Sheridan WY. <a href="mailto:ohneis@ohneis652.com">ohneis@ohneis652.com</a></p>
         </footer>
       </body>
     </html>

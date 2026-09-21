@@ -93,9 +93,10 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 
 /* laptop map: frames invisible, only the price shows; hover reveals a black scribble frame */
 .slot-rect { fill: transparent; stroke: var(--ink); stroke-opacity: 0; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; cursor: pointer; transition: stroke-opacity 120ms; }
-.slot-rect.closed { cursor: default; stroke-dasharray: 2 2; }
 .slot-link:hover .slot-rect, .slot-link:focus .slot-rect { stroke-opacity: 1; }
-.slot-rect.dark { stroke-opacity: 1; stroke: var(--accent); stroke-width: 1.6; }
+.slot-rect.sold { stroke-opacity: 1; fill: rgba(20,20,20,0.82); stroke: var(--ink); cursor: default; }
+.slot-rect.held { stroke-opacity: 1; stroke: var(--accent); stroke-dasharray: 2 2; }
+.slot-label.light { fill: var(--bg); }
 .slot-label { font-size: 6px; font-weight: 700; fill: var(--ink); pointer-events: none; }
 .slot-label.xs { font-size: 4.6px; }
 .slot-label.corner { font-size: 4px; font-weight: 600; }
