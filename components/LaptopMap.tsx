@@ -4,7 +4,7 @@ import { usd } from "@/lib/format";
 
 // The lid is drawn in millimetres (356 x 248). The photo of the lid sticker sits underneath;
 // LID tells the map where the metal lid is inside that photo, so the spots line up at every screen size.
-const LID = { left: 0.0176, top: 0.0168, width: 0.9531, height: 0.97 };
+const LID = { left: 0.0458, top: 0.0548, width: 0.9063, height: 0.8924 };
 const IMG_W = 356 / LID.width;
 const IMG_H = 248 / LID.height;
 const IMG_X = -LID.left * IMG_W;
@@ -30,13 +30,14 @@ export default function LaptopMap({ slots }: { slots: SlotPublic[] }) {
         const sold = s.status !== "open";
         const small = w < 50 || h < 40;
         const prime = s.key === "prime";
+        const locked = prime && s.locked;
         const inner = (
           <>
             <path d={wobblyRect(s.x_mm, s.y_mm, w, h, s.key)} className={`slot-rect ${sold ? "sold" : ""} ${s.reserved ? "held" : ""}`} />
             <text x={s.x_mm + w / 2} y={s.y_mm + h / 2 + (small ? 1.6 : 2.2) - (prime ? 3 : 0)} textAnchor="middle" className={`slot-label ${small ? "xs" : ""} ${sold ? "light" : ""}`}>
-              {sold ? "Sold" : s.reserved ? "Held" : usd(s.price_cents)}
+              {sold ? "Sold" : locked ? "Locked" : s.reserved ? "Held" : usd(s.price_cents)}
             </text>
-            {prime && !sold && <text x={s.x_mm + w / 2} y={s.y_mm + h / 2 + 6} textAnchor="middle" className="slot-label xs">Prime</text>}
+            {prime && !sold && <text x={s.x_mm + w / 2} y={s.y_mm + h / 2 + 6} textAnchor="middle" className="slot-label xs">{locked ? `Prime · ${usd(s.price_cents)}` : "Prime"}</text>}
           </>
         );
         return sold ? (

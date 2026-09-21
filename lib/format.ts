@@ -1,4 +1,4 @@
-export const DESIGN_FEE_CENTS = 88600; // custom sticker design by Andries
+export const DESIGN_FEE_CENTS = 148700; // custom sticker design by Andries
 
 export function usd(cents: number | null | undefined) {
   if (cents == null) return "";
@@ -18,4 +18,11 @@ export type SlotPublic = {
   kind: string;
   sort_order: number;
   reserved: boolean;
+  locked: boolean;
+  sold_count: number;
 };
+
+export const LADDER_STEP = 5; // price goes up 15% after every 5 spots sold
+export function untilNextRise(soldCount: number) {
+  return LADDER_STEP - (soldCount % LADDER_STEP);
+}

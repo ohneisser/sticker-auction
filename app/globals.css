@@ -38,14 +38,19 @@ body {
 main, header, footer { overflow-x: clip; }
 
 h1, h2, h3 { font-family: "VC Henrietta", "Satoshi", system-ui, sans-serif; line-height: 0.98; letter-spacing: 0.01em; font-weight: 300; }
+h2 { color: var(--accent); }
+.step { color: var(--accent); }
+.box.accent { border-color: var(--accent); }
+.price { color: var(--accent); }
 h1 { font-size: clamp(2.4rem, 8vw, 4.4rem); }
 h2 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); }
 h3 { font-family: "Satoshi", system-ui, sans-serif; letter-spacing: -0.01em; font-weight: 700; }
 h3 { font-size: 1.2rem; line-height: 1.15; }
 p { max-width: 58ch; }
 
-a { text-decoration: underline; text-underline-offset: 3px; }
-a:hover { text-decoration-thickness: 2px; }
+a { color: var(--accent); text-decoration: none; }
+::selection { background: var(--accent); color: #fff; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .btn {
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
@@ -57,7 +62,7 @@ a:hover { text-decoration-thickness: 2px; }
 .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); text-decoration: none; }
 .eyebrow { display: inline-block; background: var(--accent); color: #fff; padding: .35rem .7rem; font-weight: 700; border-radius: 12px 4px 10px 4px / 4px 10px 4px 12px; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--accent); border-color: var(--accent); }
 .btn-ghost:hover { background: var(--ink); color: var(--bg); }
 .btn-ghost:hover { background: var(--ink); color: var(--bg); }
 
@@ -67,7 +72,7 @@ a:hover { text-decoration-thickness: 2px; }
   width: 100%; background: var(--bg-2); border: 1.5px solid var(--line); border-radius: 12px 4px 10px 4px / 4px 10px 4px 12px;
   padding: 0.85rem 0.9rem; font: inherit; font-size: 16px; color: var(--ink); min-height: 50px;
 }
-.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: var(--ink); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
 input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 18px; height: 18px; }
 
 .rule { border-top: 1px solid var(--line); }
@@ -76,12 +81,12 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 .box { background: var(--bg-2); border: 1.5px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding: 1.3rem 1.4rem; position: relative; }
 
 .choice { display: flex; gap: .8rem; align-items: flex-start; background: var(--bg-2); border: 1.5px solid var(--line); border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px; padding: 1rem 1.2rem; cursor: pointer; }
-.choice.on { border-color: var(--ink); outline: 1px solid var(--ink); }
+.choice.on { border-color: var(--accent); outline: 1px solid var(--accent); }
 
 .hero-img { display: block; width: 100%; height: auto; transform: rotate(-4deg); filter: drop-shadow(2px 2.5px 0 rgba(0,0,0,0.4)); }
 .hero-wrap { position: relative; overflow: hidden; }
 .lid-photo { filter: drop-shadow(0.8px 1px 0 rgba(0,0,0,0.4)); }
-.socials a { text-decoration: none; font-weight: 500; }
+.socials a { text-decoration: none; font-weight: 500; color: var(--accent); }
 .socials a:hover { text-decoration: underline; }
 
 .sticky-cta {
@@ -91,20 +96,21 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 }
 @media (min-width: 768px) { .sticky-cta { display: none; } }
 
-/* laptop map: frames invisible, only the price shows; hover reveals a black scribble frame */
-.slot-rect { fill: transparent; stroke: var(--ink); stroke-opacity: 0; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; cursor: pointer; transition: stroke-opacity 120ms; }
+/* laptop map: nothing shows by default, hover reveals a white frame with the price, sold spots are black */
+.slot-rect { fill: transparent; stroke: #fff; stroke-opacity: 0; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; cursor: pointer; transition: stroke-opacity 120ms; }
+.slot-label { font-size: 6px; font-weight: 700; fill: #fff; opacity: 0; pointer-events: none; transition: opacity 120ms; }
 .slot-link:hover .slot-rect, .slot-link:focus .slot-rect { stroke-opacity: 1; }
-.slot-rect.sold { stroke-opacity: 1; fill: rgba(20,20,20,0.82); stroke: var(--ink); cursor: default; }
-.slot-rect.held { stroke-opacity: 1; stroke: var(--accent); stroke-dasharray: 2 2; }
-.slot-label.light { fill: var(--bg); }
-.slot-label { font-size: 6px; font-weight: 700; fill: var(--ink); pointer-events: none; }
+.slot-link:hover .slot-label, .slot-link:focus .slot-label { opacity: 1; }
+.slot-rect.sold { fill: var(--ink); fill-opacity: .88; stroke: var(--ink); stroke-opacity: 1; cursor: default; }
+.slot-rect.sold + .slot-label, .slot-label.light { opacity: 1; fill: #fff; }
+.slot-rect.held { stroke-opacity: 1; stroke-dasharray: 2 2; }
+.slot-rect.held + .slot-label { opacity: 1; }
 .slot-label.xs { font-size: 4.6px; }
-.slot-label.corner { font-size: 4px; font-weight: 600; }
 @media (max-width: 767px) {
   .slot-label { font-size: 9px; }
   .slot-label.xs { font-size: 7px; }
-  .slot-label.corner { font-size: 5.5px; }
 }
+.lid-photo { filter: drop-shadow(0.8px 1px 0 rgba(0,0,0,0.4)); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
@@ -112,3 +118,6 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 .scribble { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
 .scribble img { filter: invert(1); }
 .scribble img { width: 100%; height: auto; display: block; }
+
+.progress { height: 12px; border: 1.5px solid var(--ink); border-radius: 12px 4px 10px 4px / 4px 10px 4px 12px; background: var(--bg-2); overflow: hidden; }
+.progress-bar { height: 100%; background: var(--accent); min-width: 2px; transition: width .3s; }

@@ -26,6 +26,7 @@ export async function POST(req: Request) {
     const msg = error.message || "";
     if (msg.includes("slot_sold")) return NextResponse.json({ error: "slot_sold" }, { status: 409 });
     if (msg.includes("slot_reserved")) return NextResponse.json({ error: "slot_reserved" }, { status: 409 });
+    if (msg.includes("prime_locked")) return NextResponse.json({ error: "prime_locked" }, { status: 409 });
     return NextResponse.json({ error: "reserve_failed" }, { status: 500 });
   }
   const price = slot.price_cents as number;

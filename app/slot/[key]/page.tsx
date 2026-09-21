@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import BuyForm from "@/components/BuyForm";
 import LiveRefresh from "@/components/LiveRefresh";
-import { usd, type SlotPublic } from "@/lib/format";
+import { usd, untilNextRise, type SlotPublic } from "@/lib/format";
 import { isDemo, demoSlots } from "@/lib/demo";
 
 export const dynamic = "force-dynamic";
@@ -39,8 +39,11 @@ export default async function SlotPage({ params, searchParams }: { params: Promi
 
       <div className="mt-5 box">
         <div className="note">Price</div>
-        <div className="text-3xl font-bold">{usd(s.price_cents)}</div>
+        <div className="text-3xl font-bold price">{usd(s.price_cents)}</div>
         <div className="note">one sticker, stays on as long as this MacBook is with me, plus 3 Instagram stories</div>
+        {s.key !== "prime" && s.status === "open" && (
+          <div className="note mt-2">Prices go up 15% after the next {untilNextRise(s.sold_count)} spot{untilNextRise(s.sold_count) === 1 ? "" : "s"} sold. {s.sold_count} of 17 gone so far.</div>
+        )}
       </div>
 
       {mine ? (
@@ -55,6 +58,11 @@ export default async function SlotPage({ params, searchParams }: { params: Promi
         </div>
       ) : s.status !== "open" ? (
         <p className="mt-8 font-bold">Sold. <Link href="/#spots">Pick another spot</Link>.</p>
+      ) : s.locked ? (
+        <div className="mt-8 box">
+          <p className="font-bold">Locked. Prime opens once the other 17 spots are sold.</p>
+          <p className="note mt-1">{s.sold_count} of 17 gone. When the last one goes, this one goes live at {usd(s.price_cents)}, first come first served. <Link href="/#spots">Grab one of the 17 now</Link> if you want to be around when it opens.</p>
+        </div>
       ) : s.reserved ? (
         <div className="mt-8 box"><p className="font-bold">Someone is checking out this spot right now.</p><p className="note mt-1">If they don't finish within 15 minutes, it opens up again.</p></div>
       ) : (

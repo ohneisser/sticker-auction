@@ -34,6 +34,7 @@ export default function BuyForm({ slotKey, priceCents, userId, demo }: Props) {
     if (!res.ok || !json.url) {
       setBusy(null);
       if (json.error === "slot_sold") return setError("Someone just took this spot.");
+      if (json.error === "prime_locked") return setError("Prime unlocks once the other 17 spots are sold.");
       if (json.error === "slot_reserved") return setError("Someone is checking out this spot right now. Try again in 15 minutes or pick another one.");
       return setError("Couldn't start checkout. Try again.");
     }

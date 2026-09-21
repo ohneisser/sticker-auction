@@ -17,13 +17,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en">
       <body className="min-h-screen">
         <header className="flex items-center justify-between px-5 md:px-10 py-4 text-sm">
-          <Link href="/" className="no-underline font-bold">@ohneis652</Link>
+          <Link href="/" className="no-underline font-bold" style={{ color: "var(--ink)" }}>@ohneis652</Link>
           <nav className="flex gap-5">
             {user ? (
               <>
                 <Link href="/account">My spots</Link>
                 {isAdmin && <Link href="/admin">Admin</Link>}
-                <form action="/logout" method="post"><button className="underline underline-offset-4 cursor-pointer">Log out</button></form>
+                <form action="/logout" method="post"><button className="cursor-pointer" style={{ color: "var(--accent)" }}>Log out</button></form>
               </>
             ) : (
               <Link href="/login">Log in</Link>
