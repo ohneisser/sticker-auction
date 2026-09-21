@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   const admin = createAdminClient();
   const { data } = await admin
     .from("slots")
-    .update({ reserved_by: null, reserved_until: null })
+    .update({ reserved_key: null, reserved_until: null })
     .eq("status", "open")
     .lt("reserved_until", new Date().toISOString())
     .select("key");

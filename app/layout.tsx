@@ -5,7 +5,7 @@ import { getUserSafe } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Put your logo on my laptop",
-  description: "16 sticker spots on the laptop that gets seen by more AI people than most ads. 7 days to bid. Highest bid wins.",
+  description: "18 sticker spots on the laptop that gets seen by more AI founders than most ads. Fixed prices, first come first served.",
 };
 export const viewport: Viewport = { themeColor: "#E5DDD2", width: "device-width", initialScale: 1, colorScheme: "light" };
 
@@ -19,20 +19,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <header className="flex items-center justify-between px-5 md:px-10 py-4 text-sm">
           <Link href="/" className="no-underline font-bold" style={{ color: "var(--ink)" }}>@ohneis652</Link>
           <nav className="flex gap-5">
-            {user ? (
-              <>
-                <Link href="/account">My spots</Link>
-                {isAdmin && <Link href="/admin">Admin</Link>}
-                <form action="/logout" method="post"><button className="cursor-pointer" style={{ color: "var(--accent)" }}>Log out</button></form>
-              </>
-            ) : (
-              <Link href="/login">Log in</Link>
-            )}
+            <a href="https://instagram.com/ohneis652" target="_blank" rel="noreferrer">Insta</a>
+            {isAdmin && <Link href="/admin">Admin</Link>}
           </nav>
         </header>
         <main className="px-5 md:px-10 pb-32 md:pb-24">{children}</main>
         <footer className="px-5 md:px-10 py-8 rule text-sm note">
-          <p>Fixed prices, first come first served. Payment via Stripe. Nobody sees who bought what until the reveal. Ohneisser LLC, Sheridan WY. <a href="mailto:ohneis@ohneis652.com">ohneis@ohneis652.com</a></p>
+          <p>Fixed prices, first come first served. Payment via Stripe. All sales are final, no refunds unless the sticker never makes it onto the laptop. Ohneisser LLC, Sheridan WY. <a href="mailto:ohneis@ohneis652.com">ohneis@ohneis652.com</a></p>
         </footer>
       </body>
     </html>

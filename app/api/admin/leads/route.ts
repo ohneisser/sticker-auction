@@ -10,29 +10,13 @@ export async function GET() {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
   const admin = createAdminClient();
-  const { data: profiles } = await admin.from("profiles").select("*").order("created_at", { ascending: false });
-  const { data: bids } = await admin.from("orders").select("user_id, slot_key, amount_cents, status");
-
-  const byUser = new Map<string, string[]>();
-  for (const b of bids || []) {
-    const list = byUser.get(b.user_id) || [];
-    list.push(`${b.slot_key}:${b.amount_cents / 100}:${b.status}`);
-    byUser.set(b.user_id, list);
-  }
-
+  const { data: orders } = await admin.from("orders").select("*").order("created_at", { ascending: false });
   const esc = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
   const rows = [
-    ["email", "name", "company", "website", "role", "marketing_opt_in", "signed_up", "orders"].join(","),
-    ...(profiles || []).map((p) =>
-      [p.email, p.full_name, p.company, p.website, p.role, p.marketing_opt_in, p.created_at, (byUser.get(p.id) || []).join(" | ")]
-        .map(esc)
-        .join(",")
-    ),
+    ["email", "name", "company", "website", "spot", "amount_usd", "design", "status", "created"].join(","),
+    ...(orders || []).map((o) => [o.email, o.full_name, o.company, o.website, o.slot_key, o.amount_cents / 100, o.design_option, o.status, o.created_at].map(esc).join(",")),
   ];
   return new NextResponse(rows.join("\n"), {
-    headers: {
-      "Content-Type": "text/csv",
-      "Content-Disposition": `attachment; filename="sticker-auction-leads.csv"`,
-    },
+    headers: { "Content-Type": "text/csv", "Content-Disposition": `attachment; filename="sticker-orders.csv"` },
   });
 }

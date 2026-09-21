@@ -19,22 +19,16 @@ export async function POST(req: Request) {
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.expired") {
     const cs = event.data.object;
     if (cs.metadata?.kind !== "spot") return NextResponse.json({ received: true });
-    const orderId = cs.metadata.order_id;
-    const slotKey = cs.metadata.slot_key;
-    const userId = cs.metadata.user_id;
+    const { order_id: orderId, slot_key: slotKey, email, company } = cs.metadata;
 
     if (event.type === "checkout.session.completed" && cs.payment_status === "paid") {
       const { data: order } = await admin.from("orders").update({ status: "paid", stripe_payment_intent_id: typeof cs.payment_intent === "string" ? cs.payment_intent : null }).eq("id", orderId).select().single();
-      await admin.from("slots").update({ status: "sold", current_bidder: userId, current_bid_cents: order?.amount_cents ?? cs.amount_total, reserved_by: null, reserved_until: null }).eq("key", slotKey);
-      if (typeof cs.customer === "string") await admin.from("profiles").update({ stripe_customer_id: cs.customer }).eq("id", userId).is("stripe_customer_id", null);
-      const [{ data: profile }, { data: slot }] = await Promise.all([
-        admin.from("profiles").select("email").eq("id", userId).single(),
-        admin.from("slots").select("label").eq("key", slotKey).single(),
-      ]);
-      if (profile?.email && slot) void sendBought(profile.email, slot.label, usd(cs.amount_total || 0));
+      await admin.from("slots").update({ status: "sold", buyer_company: company || null, current_bid_cents: order?.amount_cents ?? cs.amount_total, reserved_key: null, reserved_until: null }).eq("key", slotKey);
+      const { data: slot } = await admin.from("slots").select("label").eq("key", slotKey).single();
+      if (email && slot) void sendBought(email, slot.label, usd(cs.amount_total || 0));
     } else if (event.type === "checkout.session.expired") {
       await admin.from("orders").update({ status: "expired" }).eq("id", orderId).eq("status", "pending");
-      await admin.from("slots").update({ reserved_by: null, reserved_until: null }).eq("key", slotKey).eq("reserved_by", userId).eq("status", "open");
+      await admin.from("slots").update({ reserved_key: null, reserved_until: null }).eq("key", slotKey).eq("reserved_key", email).eq("status", "open");
     }
   }
   return NextResponse.json({ received: true });

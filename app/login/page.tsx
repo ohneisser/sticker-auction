@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const next = params.get("next") || "/";
+  const next = params.get("next") || "/admin";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ function LoginForm() {
   return (
     <div className="max-w-md mx-auto pt-6 md:pt-10">
       <h2>Log in</h2>
-      <p className="mt-3 note">New here? <Link href={`/signup?next=${encodeURIComponent(next)}`}>Create an account</Link>, it's quick.</p>
+      <p className="mt-3 note">Admin only. Buyers don't need an account, <Link href="/#spots">pick a spot</Link> instead.</p>
       <div className="mt-8">
         <label className="field"><span>Email</span><input value={email} onChange={(e) => setEmail(e.target.value)} type="email" autoComplete="email" /></label>
         <label className="field"><span>Password</span><input value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="current-password" onKeyDown={(e) => e.key === "Enter" && submit()} /></label>

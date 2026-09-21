@@ -92,8 +92,8 @@ export default async function Home() {
       <section id="how" className="mt-16 md:mt-24 scroll-mt-20">
         <h2>How it works.</h2>
         <ol className="mt-6 space-y-3">
-          <li className="flex gap-4"><span className="font-bold text-2xl leading-none step">1</span><div>Sign up. Name, company, email.</div></li>
-          <li className="flex gap-4"><span className="font-bold text-2xl leading-none step">2</span><div>Pick a spot, upload your logo, pay with card on the Stripe page.</div></li>
+          <li className="flex gap-4"><span className="font-bold text-2xl leading-none step">1</span><div>Pick a spot. Name, company, email, logo. No account needed.</div></li>
+          <li className="flex gap-4"><span className="font-bold text-2xl leading-none step">2</span><div>Pay with card on the Stripe page. All sales are final.</div></li>
           <li className="flex gap-4"><span className="font-bold text-2xl leading-none step">3</span><div>Done. I print the sticker, put it on, and tag you in the reveal.</div></li>
         </ol>
         <p className="note mt-6">Made for AI tools, creative apps and startups that sell to creators, studios and agencies. No gambling, no crypto pumps, nothing I wouldn't show my mom.</p>
