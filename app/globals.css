@@ -98,13 +98,11 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--ink); width: 1
 
 /* laptop map: nothing shows by default, hover reveals a white frame with the price, sold spots are black */
 .slot-rect { fill: transparent; stroke: #fff; stroke-opacity: 0; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; cursor: pointer; transition: stroke-opacity 120ms; }
-.slot-label { font-size: 6px; font-weight: 700; fill: #fff; opacity: 0; pointer-events: none; transition: opacity 120ms; }
+.slot-label { font-size: 6px; font-weight: 700; fill: #fff; pointer-events: none; }
 .slot-link:hover .slot-rect, .slot-link:focus .slot-rect { stroke-opacity: 1; }
-.slot-link:hover .slot-label, .slot-link:focus .slot-label { opacity: 1; }
 .slot-rect.sold { fill: var(--ink); fill-opacity: .88; stroke: var(--ink); stroke-opacity: 1; cursor: default; }
-.slot-rect.sold + .slot-label, .slot-label.light { opacity: 1; fill: #fff; }
+.slot-label.light { fill: #fff; }
 .slot-rect.held { stroke-opacity: 1; stroke-dasharray: 2 2; }
-.slot-rect.held + .slot-label { opacity: 1; }
 .slot-label.xs { font-size: 4.6px; }
 @media (max-width: 767px) {
   .slot-label { font-size: 9px; }

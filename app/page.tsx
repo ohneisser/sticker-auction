@@ -62,7 +62,7 @@ export default async function Home() {
 
       <section id="spots" className="mt-20 md:mt-24 scroll-mt-20">
         <h2>Pick your spot.</h2>
-        <p className="note mt-2 mb-5">Real sizes on a 16 inch MacBook. Hover or tap a spot to see the price. Black means sold. The big square on the Apple logo is Prime, it unlocks last.</p>
+        <p className="note mt-2 mb-5">Real sizes on a 16 inch MacBook. Tap a price to buy that spot. Black means sold. The big square on the Apple logo is Prime, it unlocks last.</p>
         <LaptopMap slots={slots} />
         <p className="note mt-4 md:max-w-xl">First come, first served. While you check out, the spot is held for you for 15 minutes. Prices rise 15% after every 5 spots sold, so the early ones pay the least. Nobody sees who bought what until the reveal.</p>
       </section>
