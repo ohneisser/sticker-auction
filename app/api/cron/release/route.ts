@@ -3,7 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
-// Runs every 5 minutes: frees spots whose 15 minute checkout reservation ran out.
+// Runs every 5 minutes: frees spots whose 10 minute checkout reservation ran out.
 // Also keeps the Supabase free tier awake.
 export async function GET(req: Request) {
   const auth = req.headers.get("authorization");

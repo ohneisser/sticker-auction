@@ -22,7 +22,7 @@ begin
     raise exception 'slot_reserved';
   end if;
   v_price := public.ladder_price(v.min_bid_cents, p_slot_key);
-  update public.slots set reserved_key = p_reserved_key, reserved_until = now() + interval '15 minutes' where key = p_slot_key;
+  update public.slots set reserved_key = p_reserved_key, reserved_until = now() + interval '10 minutes' where key = p_slot_key;
   return json_build_object('price_cents', v_price, 'label', v.label);
 end $$;
 drop function if exists public.reserve_slot(text, uuid);

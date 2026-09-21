@@ -32,7 +32,7 @@ Next.js + Supabase + Stripe. Companies bid on sticker spots on the MacBook lid, 
 
 ## Fixed prices (current flow)
 
-- Every spot has a fixed price in `slots.min_bid_cents`. Buying = logo upload, then Stripe Checkout. The spot is reserved for 15 minutes (`reserve_slot()`), the webhook marks it sold on `checkout.session.completed` and frees it on `checkout.session.expired`.
+- Every spot has a fixed price in `slots.min_bid_cents`. Buying = logo upload, then Stripe Checkout. The spot is reserved for 10 minutes (`reserve_slot()`), the webhook marks it sold on `checkout.session.completed` and frees it on `checkout.session.expired`.
 - Cron `/api/cron/release` frees stale reservations every 5 minutes and keeps Supabase awake.
 - Prime is a normal spot with a high price (key `prime`).
 - Run `supabase/migrations/002_fixed_prices.sql` after `001`.

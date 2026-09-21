@@ -30,7 +30,7 @@ export default function BuyForm({ slotKey, priceCents, demo }: Props) {
     if (!res.ok || !json.url) {
       setBusy(false);
       if (json.error === "slot_sold") return setError("Someone just took this spot.");
-      if (json.error === "slot_reserved") return setError("Someone is checking out this spot right now. Try again in 15 minutes or pick another one.");
+      if (json.error === "slot_reserved") return setError("Someone is checking out this spot right now. Try again in 10 minutes or pick another one.");
       if (json.error === "prime_locked") return setError("Prime unlocks once the other 17 spots are sold.");
       if (json.error === "bad_logo") return setError("Logo has to be SVG, PDF, AI or PNG, under 20 MB.");
       return setError("Couldn't start checkout. Check your details and try again.");
@@ -73,7 +73,7 @@ export default function BuyForm({ slotKey, priceCents, demo }: Props) {
       <button className="btn w-full" onClick={buy} disabled={busy || !ready || demo}>
         {busy ? "Opening checkout…" : `Buy this spot for ${usd(total)}`}
       </button>
-      <p className="note mt-3 text-sm">You pay on the next page via Stripe. The spot is held for you for 15 minutes while you check out.</p>
+      <p className="note mt-3 text-sm">You pay on the next page via Stripe. The spot is held for you for 10 minutes while you check out.</p>
     </div>
   );
 }

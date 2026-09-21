@@ -45,7 +45,7 @@ begin
   if v.reserved_until is not null and v.reserved_until > now() and v.reserved_by <> p_user_id then
     raise exception 'slot_reserved';
   end if;
-  update public.slots set reserved_by = p_user_id, reserved_until = now() + interval '15 minutes' where key = p_slot_key;
+  update public.slots set reserved_by = p_user_id, reserved_until = now() + interval '10 minutes' where key = p_slot_key;
   return json_build_object('price_cents', v.min_bid_cents, 'label', v.label);
 end $$;
 revoke all on function public.reserve_slot(text, uuid) from public, anon, authenticated;

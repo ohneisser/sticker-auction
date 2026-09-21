@@ -51,7 +51,7 @@ export default async function SlotPage({ params, searchParams }: { params: Promi
           <p className="note mt-1">{s.sold_count} of 17 gone. When the last one goes, this one goes live at {usd(s.price_cents)}, first come first served. <Link href="/#spots">Grab one of the 17 now</Link> if you want to be around when it opens.</p>
         </div>
       ) : s.reserved ? (
-        <div className="mt-8 box"><p className="font-bold">Someone is checking out this spot right now.</p><p className="note mt-1">If they don't finish within 15 minutes, it opens up again.</p></div>
+        <div className="mt-8 box"><p className="font-bold">Someone is checking out this spot right now.</p><p className="note mt-1">If they don't finish within 10 minutes, it opens up again.</p></div>
       ) : (
         <div className="mt-8"><BuyForm slotKey={s.key} priceCents={s.price_cents} demo={isDemo} /></div>
       )}

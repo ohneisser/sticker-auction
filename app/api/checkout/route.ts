@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     custom_text: { submit: { message: "All sales are final. No refunds, unless your sticker never makes it onto the laptop." } },
     metadata: { kind: "spot", order_id: order.id, slot_key: slotKey, email, company },
     success_url: `${site}/slot/${slotKey}?paid=1`,
-    cancel_url: `${site}/slot/${slotKey}`,
+    cancel_url: `${site}/api/checkout/cancel?o=${order.id}`,
   });
   await admin.from("orders").update({ stripe_checkout_session_id: session.id }).eq("id", order.id);
   return NextResponse.json({ url: session.url });

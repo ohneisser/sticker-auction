@@ -19,3 +19,11 @@ export function sendBought(to: string, slotLabel: string, amount: string) {
     `Hey,\n\nthe ${slotLabel} spot on my MacBook is yours. ${amount} went through and I already have your logo file, so nothing to do on your side.\n\nI get it printed, put it on and tag you in the reveal.\n\nThanks for backing this,\nAndries`
   );
 }
+
+export function sendRefunded(to: string) {
+  return send(
+    to,
+    "That spot just got taken, you've been refunded",
+    `Hey,\n\nbad timing: someone finished paying for the same spot a few seconds before you. Your payment has been refunded in full, it shows up on your card in a few days.\n\nIf you still want a spot, the map is here: ${process.env.NEXT_PUBLIC_SITE_URL || ""}\n\nAndries`
+  );
+}
